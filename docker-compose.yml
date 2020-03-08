@@ -1,0 +1,80 @@
+version: "3.6"
+services:
+  redis:
+    image: redis:3
+    container_name: common-mistakes-redis-3
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+  mysql57:
+    image: mysql:5.7
+    container_name: common-mistakes-mysql57
+    environment:
+      MYSQL_ROOT_PASSWORD: kIo9u7Oi0eg
+    ports:
+      - "6657:3306"
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d/
+  rabbit:
+    image: rabbitmq:management
+    container_name: common-mistakes-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+      - "25672:25672"
+      - "61613:61613"
+      - "1883:1883"
+  es1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+  es2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+  es3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9203:9200"
+      - "9303:9300"

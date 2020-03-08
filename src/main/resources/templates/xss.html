@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<script>
+    console.log(document.cookie);
+</script>
+<body>
+<div style="font-size: 14px">
+    <form id="myForm" method="post" th:action="@{/xss/}">
+
+        <label th:text="${username}"/>
+        <input id="username" name="username" size="100" type="text"/>
+        <button th:text="Register" type="submit"/>
+    </form>
+</div>
+</body>
