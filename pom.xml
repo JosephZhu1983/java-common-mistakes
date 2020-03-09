@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>org.geekbang.time</groupId>
-    <artifactId>common-mistakes</artifactId>
+    <artifactId>java-common-mistakes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>common-mistakes</name>
+    <name>java-common-mistakes</name>
 
     <properties>
         <java.version>1.8</java.version>
