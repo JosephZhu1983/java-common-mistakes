@@ -23,7 +23,7 @@ public class ConcurrentHashMapPerformanceController {
 
     private static int LOOP_COUNT = 10000000;
     private static int THREAD_COUNT = 10;
-    private static int ITEM_COUNT = 1000;
+    private static int ITEM_COUNT = 10;
 
     @GetMapping("good")
     public String good() throws InterruptedException {
