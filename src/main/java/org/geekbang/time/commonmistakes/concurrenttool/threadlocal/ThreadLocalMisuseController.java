@@ -12,7 +12,7 @@ import java.util.Map;
 @RequestMapping("threadlocal")
 public class ThreadLocalMisuseController {
 
-    private ThreadLocal<Integer> currentUser = ThreadLocal.withInitial(() -> null);
+    private static final ThreadLocal<Integer> currentUser = ThreadLocal.withInitial(() -> null);
 
     @GetMapping("wrong")
     public Map wrong(@RequestParam("userId") Integer userId) {
