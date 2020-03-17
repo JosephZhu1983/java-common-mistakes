@@ -43,7 +43,9 @@ public class ForEachOrderedTest {
     }
 
     private void stream() {
-        IntStream.rangeClosed(1, 10).filter(ForEachOrderedTest::filter).forEach(ForEachOrderedTest::consume);
+        IntStream.rangeClosed(1, 10)
+                .filter(ForEachOrderedTest::filter)
+                .forEach(ForEachOrderedTest::consume);
     }
 
     private void parallelStream() {
