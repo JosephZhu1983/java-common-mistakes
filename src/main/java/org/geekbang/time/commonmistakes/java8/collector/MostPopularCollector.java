@@ -6,6 +6,10 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.summingInt;
 
 public class MostPopularCollector<T> implements Collector<T, Map<T, Integer>, Optional<T>> {
     @Override
@@ -20,13 +24,14 @@ public class MostPopularCollector<T> implements Collector<T, Map<T, Integer>, Op
 
     @Override
     public BinaryOperator<Map<T, Integer>> combiner() {
-        return null;
+        return (a, b) -> Stream.concat(a.entrySet().stream(), b.entrySet().stream())
+                .collect(Collectors.groupingBy(Map.Entry::getKey, summingInt(Map.Entry::getValue)));
     }
 
     @Override
     public Function<Map<T, Integer>, Optional<T>> finisher() {
         return (acc) -> acc.entrySet().stream()
-                .reduce((a, b) -> a.getValue() > b.getValue() ? a : b)
+                .reduce(BinaryOperator.maxBy(Map.Entry.comparingByValue()))
                 .map(Map.Entry::getKey);
     }
 
