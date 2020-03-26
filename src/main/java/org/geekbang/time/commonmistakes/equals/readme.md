@@ -4,4 +4,4 @@
 - hashCode和equals要配对实现：equalitymethod
 - 注意compareTo和equals的逻辑一致性：compareto
 - 小心Lombok生成代码的“坑”：lombokequals
-
+-（补充）不同类加载器加载相同类的坑：differentclassloaderequals
