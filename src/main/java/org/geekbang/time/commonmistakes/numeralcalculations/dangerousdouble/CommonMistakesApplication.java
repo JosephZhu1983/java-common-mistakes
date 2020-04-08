@@ -37,13 +37,13 @@ public class CommonMistakesApplication {
         BigDecimal bigDecimal2 = new BigDecimal(String.valueOf(100d));
         BigDecimal bigDecimal3 = new BigDecimal(String.valueOf(100));
         BigDecimal bigDecimal4 = BigDecimal.valueOf(100d);
-        BigDecimal bigDecimal5 = new BigDecimal(Double.toString(100d));
+        BigDecimal bigDecimal5 = new BigDecimal(Double.toString(100));
 
-        print(bigDecimal1);
-        print(bigDecimal2);
-        print(bigDecimal3);
-        print(bigDecimal4);
-        print(bigDecimal5);
+        print(bigDecimal1); //scale 0 precision 3 result 401.500
+        print(bigDecimal2); //scale 1 precision 4 result 401.5000
+        print(bigDecimal3); //scale 0 precision 3 result 401.500
+        print(bigDecimal4); //scale 1 precision 4 result 401.5000
+        print(bigDecimal5); //scale 1 precision 4 result 401.5000
     }
 
     private static void print(BigDecimal bigDecimal) {
