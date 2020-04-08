@@ -1,13 +1,15 @@
 package org.geekbang.time.commonmistakes.numeralcalculations.dangerousdouble;
 
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.math.BigDecimal;
 
+@Slf4j
 public class CommonMistakesApplication {
 
     public static void main(String[] args) {
-
-        test();
+        testScale();
         System.out.println("wrong1");
         wrong1();
         System.out.println("wrong2");
@@ -30,10 +32,22 @@ public class CommonMistakesApplication {
             System.out.println("OK");
     }
 
-    private static void test() {
-        System.out.println(Long.toBinaryString(Double.doubleToRawLongBits(0.1)));
-        System.out.println(Long.toBinaryString(Double.doubleToRawLongBits(0.2)));
+    private static void testScale() {
+        BigDecimal bigDecimal1 = new BigDecimal("100");
+        BigDecimal bigDecimal2 = new BigDecimal(String.valueOf(100d));
+        BigDecimal bigDecimal3 = new BigDecimal(String.valueOf(100));
+        BigDecimal bigDecimal4 = BigDecimal.valueOf(100d);
+        BigDecimal bigDecimal5 = new BigDecimal(Double.toString(100d));
 
+        print(bigDecimal1);
+        print(bigDecimal2);
+        print(bigDecimal3);
+        print(bigDecimal4);
+        print(bigDecimal5);
+    }
+
+    private static void print(BigDecimal bigDecimal) {
+        log.info("scale {} precision {} result {}", bigDecimal.scale(), bigDecimal.precision(), bigDecimal.multiply(new BigDecimal("4.015")));
     }
 
     private static void wrong2() {
@@ -48,9 +62,6 @@ public class CommonMistakesApplication {
         System.out.println(new BigDecimal("1.0").subtract(new BigDecimal("0.8")));
         System.out.println(new BigDecimal("4.015").multiply(new BigDecimal("100")));
         System.out.println(new BigDecimal("123.3").divide(new BigDecimal("100")));
-
-        System.out.println(new BigDecimal("4.015").multiply(new BigDecimal(Double.toString(100))));
-        System.out.println(new BigDecimal("4.015").multiply(BigDecimal.valueOf(100)));
 
     }
 }
