@@ -50,6 +50,7 @@ public class UserService {
             log.error("create user failed", ex);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
+        log.info("result {} ", userRepository.findByName(name).size());//为什么这里是1你能想明白吗？
     }
 
     //DefaultTransactionAttribute

@@ -29,13 +29,13 @@ public class CommonMistakesApplication {
         Point point2 = new Point();
         Point point3 = (Point) ClassLoader.getSystemClassLoader().loadClass(Point.class.getName()).newInstance();
 
-        System.out.println(point1 instanceof Point);
-        System.out.println(point1.getClass() == Point.class);
-        System.out.println(point1.equals(point2));
+        System.out.println(point1 instanceof Point);//false
+        System.out.println(point1.getClass() == Point.class);//false
+        System.out.println(point1.equals(point2));//false
 
-        System.out.println(point3 instanceof Point);
-        System.out.println(point3.getClass() == Point.class);
-        System.out.println(point3.equals(point2));
+        System.out.println(point3 instanceof Point);//true
+        System.out.println(point3.getClass() == Point.class);//true
+        System.out.println(point3.equals(point2));//true
     }
 }
 

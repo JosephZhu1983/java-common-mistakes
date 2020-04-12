@@ -86,10 +86,8 @@ public class CommonMistakesApplication {
         //https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html
         LongAdder longAdder = new LongAdder();
         IntStream.rangeClosed(1, 1000000).forEach(i -> {
-            try {
-                try (Stream<String> lines = Files.lines(Paths.get("demo.txt"))) {
-                    lines.forEach(line -> longAdder.increment());
-                }
+            try (Stream<String> lines = Files.lines(Paths.get("demo.txt"))) {
+                lines.forEach(line -> longAdder.increment());
             } catch (IOException e) {
                 e.printStackTrace();
             }
