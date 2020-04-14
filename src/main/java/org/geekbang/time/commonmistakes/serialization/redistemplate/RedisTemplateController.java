@@ -63,5 +63,21 @@ public class RedisTemplateController {
         String key = "testCounter";
         countRedisTemplate.opsForValue().set(key, 1L);
         log.info("{} {}", countRedisTemplate.opsForValue().get(key), countRedisTemplate.opsForValue().get(key) instanceof Long);
+        Long l1 = getLongFromRedis(key);
+        countRedisTemplate.opsForValue().set(key, Integer.MAX_VALUE + 1L);
+        log.info("{} {}", countRedisTemplate.opsForValue().get(key), countRedisTemplate.opsForValue().get(key) instanceof Long);
+        Long l2 = getLongFromRedis(key);
+        log.info("{} {} {}", l1, l2);
+    }
+
+    private Long getLongFromRedis(String key) {
+        Object o = countRedisTemplate.opsForValue().get(key);
+        if (o instanceof Integer) {
+            return ((Integer) o).longValue();
+        }
+        if (o instanceof Long) {
+            return (Long) o;
+        }
+        return null;
     }
 }
