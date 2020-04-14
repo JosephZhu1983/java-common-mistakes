@@ -67,7 +67,7 @@ public class RedisTemplateController {
         countRedisTemplate.opsForValue().set(key, Integer.MAX_VALUE + 1L);
         log.info("{} {}", countRedisTemplate.opsForValue().get(key), countRedisTemplate.opsForValue().get(key) instanceof Long);
         Long l2 = getLongFromRedis(key);
-        log.info("{} {} {}", l1, l2);
+        log.info("{} {}", l1, l2);
     }
 
     private Long getLongFromRedis(String key) {
