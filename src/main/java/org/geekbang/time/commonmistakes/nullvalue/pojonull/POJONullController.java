@@ -24,7 +24,7 @@ public class POJONullController {
         objectMapper.registerModule(new Jdk8Module());
         UserDto result = objectMapper.readValue("{\"id\":\"1\", \"age\":30, \"name\":null}", UserDto.class);
         log.info("field name with null value dto:{} name:{}", result, result.getName().orElse("N/A"));
-        //field name with null value dto:UserDto(id=1, name=Optional.empty, age=Optional[30]) name:N/A
+        // field name with null value dto:UserDto(id=1, name=Optional.empty, age=Optional[30]) name:N/A
         log.info("missing field name dto:{}", objectMapper.readValue("{\"id\":\"1\", \"age\":30}", UserDto.class));
         // missing field name dto:UserDto(id=1, name=null, age=Optional[30])
     }
