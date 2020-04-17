@@ -4,3 +4,4 @@
 - 没有充分了解并发工具的特性，从而无法发挥其威力：concurrenthashmapperformance
 - 没有认清并发工具的使用场景，因而导致性能问题：copyonwritelistmisuse
 - （补充）putIfAbsent vs computeIfAbsent的一些特性比对：ciavspia
+- （补充）异步执行多个子任务等待所有任务结果汇总处理的例子：multiasynctasks
