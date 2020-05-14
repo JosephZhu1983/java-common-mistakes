@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geekbang.time.commonmistakes.dataandcode.sqlinject.UserDataMapper">
+    <select id="findByNamesWrong" resultType="org.geekbang.time.commonmistakes.dataandcode.sqlinject.UserData">
+        SELECT id,name FROM `userdata` WHERE name in (${names})
+    </select>
+    <select id="findByNamesRight" resultType="org.geekbang.time.commonmistakes.dataandcode.sqlinject.UserData">
+        SELECT id,name FROM `userdata` WHERE name in
+        <foreach collection="names" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>
