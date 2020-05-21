@@ -1,7 +1,11 @@
 ## 《Java业务开发常见错误100例》源码目录
 
+### 专栏地址
 [进入专栏](https://time.geekbang.org/column/intro/294?utm_term=zeus134KG&utm_source=blog&utm_medium=zhuye)
 
+### 点赞趋势
+[![点赞趋势](https://starchart.cc/JosephZhu1983/java-common-mistakes.svg)](https://starchart.cc/JosephZhu1983/java-common-mistakes)
+      
 ### 源码说明
 
 - 专栏的所有代码基于Java 8 + Spring Boot 2.2.1.RELEASE + Spring Cloud Greenwich.SR4 + Spring Data Moore-SR4开发，基于Maven做依赖管理。
