@@ -20,7 +20,7 @@ public class TrustClientCalculationController {
     @PostMapping("/orderRight")
     public void right(@RequestBody Order order) {
         Item item = Db.getItem(order.getItemId());
-        if (order.getItemPrice().equals(item.getItemPrice())) {
+        if (!order.getItemPrice().equals(item.getItemPrice())) {
             throw new RuntimeException("您选购的商品价格有变化，请重新下单");
         }
         order.setItemPrice(item.getItemPrice());
