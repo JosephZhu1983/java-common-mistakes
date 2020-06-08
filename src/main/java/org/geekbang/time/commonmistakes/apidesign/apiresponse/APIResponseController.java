@@ -59,6 +59,11 @@ public class APIResponseController {
         return new OrderInfo("Created", 2L);
     }
 
+    @GetMapping("server2")
+    public String server2(@RequestParam("userId") Long userId) {
+        return userId + "OK";
+    }
+
     @GetMapping("client")
     @NoAPIResponse
     public String client(@RequestParam(value = "error", defaultValue = "0") int error) {

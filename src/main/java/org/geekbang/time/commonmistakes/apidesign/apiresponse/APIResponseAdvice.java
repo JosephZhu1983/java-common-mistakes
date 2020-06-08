@@ -1,6 +1,9 @@
 package org.geekbang.time.commonmistakes.apidesign.apiresponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.MediaType;
@@ -9,6 +12,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 @Slf4j
 public class APIResponseAdvice implements ResponseBodyAdvice<Object> {
+    @Autowired
+    private ObjectMapper objectMapper;
 
     //自动处理APIException，包装为APIResponse
     @ExceptionHandler(APIException.class)
@@ -28,6 +34,16 @@ public class APIResponseAdvice implements ResponseBodyAdvice<Object> {
         return apiResponse;
     }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public APIResponse handleException(NoHandlerFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setSuccess(false);
+        apiResponse.setCode(4000);
+        apiResponse.setMessage(ex.getMessage());
+        return apiResponse;
+    }
+
     //仅当方法或类没有标记@NoAPIResponse才自动包装
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
@@ -37,6 +53,7 @@ public class APIResponseAdvice implements ResponseBodyAdvice<Object> {
     }
 
     //自动包装外层APIResposne响应
+    @SneakyThrows
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         APIResponse apiResponse = new APIResponse();
@@ -44,6 +61,12 @@ public class APIResponseAdvice implements ResponseBodyAdvice<Object> {
         apiResponse.setMessage("OK");
         apiResponse.setCode(2000);
         apiResponse.setData(body);
-        return apiResponse;
+        if (body instanceof String) {
+            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            return objectMapper.writeValueAsString(apiResponse);
+        } else {
+            return apiResponse;
+        }
+
     }
 }
