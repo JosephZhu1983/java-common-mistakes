@@ -2,3 +2,4 @@
 - 异步处理需要消息补偿闭环：compensation
 - 注意消息模式是广播还是工作队列：fanoutvswork
 - 别让死信堵塞了消息队列：deadletter
+- （补充）使用RMQ的DLX实现延迟重试：rabbitmqdlx
