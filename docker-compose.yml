@@ -27,69 +27,54 @@ services:
       - "25672:25672"
       - "61613:61613"
       - "1883:1883"
-  grafana:
-    image: grafana/grafana
-    ports:
-      - 3000:3000
+  es1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    container_name: es01
     environment:
-      - GF_SERVER_ROOT_UR=http://127.0.0.1
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-  influxdb:
-    image: influxdb
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     ports:
-      - 8086:8086
-      - 8083:8083
-      - 2003:2003
+      - "9201:9200"
+      - "9301:9300"
+  es2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    container_name: es02
     environment:
-      - INFLUXDB_GRAPHITE_ENABLED=true
-#  es1:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
-#    container_name: es01
-#    environment:
-#      - node.name=es01
-#      - cluster.name=es-docker-cluster
-#      - discovery.seed_hosts=es02,es03
-#      - cluster.initial_master_nodes=es01,es02,es03
-#      - bootstrap.memory_lock=true
-#      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
-#    ports:
-#      - "9201:9200"
-#      - "9301:9300"
-#  es2:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
-#    container_name: es02
-#    environment:
-#      - node.name=es02
-#      - cluster.name=es-docker-cluster
-#      - discovery.seed_hosts=es01,es03
-#      - cluster.initial_master_nodes=es01,es02,es03
-#      - bootstrap.memory_lock=true
-#      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
-#    ports:
-#      - "9202:9200"
-#      - "9302:9300"
-#  es3:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
-#    container_name: es03
-#    environment:
-#      - node.name=es03
-#      - cluster.name=es-docker-cluster
-#      - discovery.seed_hosts=es01,es02
-#      - cluster.initial_master_nodes=es01,es02,es03
-#      - bootstrap.memory_lock=true
-#      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
-#    ports:
-#      - "9203:9200"
-#      - "9303:9300"
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+  es3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9203:9200"
+      - "9303:9300"

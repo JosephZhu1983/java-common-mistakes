@@ -37,7 +37,7 @@ public class MQListener {
                 rabbitMQProperties.builder().headers(headers);
                 channel.basicPublish(Consts.BUFFER_EXCHANGE, Consts.BUFFER_ROUTING_KEY, rabbitMQProperties, message.getBody());
             } else {
-                log.info("消息：{} 已重试 {} 次，发送到死信队列处理！", m, Consts.RETRY_COUNT);
+                log.info("Handler 消费消息：{} 异常，已重试 {} 次，发送到死信队列处理！", m, Consts.RETRY_COUNT);
                 channel.basicPublish(Consts.DEAD_EXCHANGE, Consts.DEAD_ROUTING_KEY, null, message.getBody());
             }
         }
