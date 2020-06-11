@@ -20,6 +20,8 @@ public class DeadLetterController {
 
     @GetMapping("send")
     public void send() {
-        rabbitTemplate.convertAndSend(Consts.EXCHANGE, Consts.QUEUE, "msg" + atomicLong.incrementAndGet());
+        String message = "msg" + atomicLong.incrementAndGet();
+        log.info("Client 发送消息 {}", message);
+        rabbitTemplate.convertAndSend(Consts.EXCHANGE, Consts.QUEUE, message);
     }
 }

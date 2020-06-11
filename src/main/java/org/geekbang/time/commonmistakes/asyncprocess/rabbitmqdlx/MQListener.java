@@ -24,14 +24,13 @@ public class MQListener {
     public void handler(@Payload Message message, Channel channel) throws IOException {
         String m = new String(message.getBody());
         try {
-            log.info("收到消息：{}", m);
+            log.info("Handler 收到消息：{}", m);
             throw new RuntimeException("处理消息失败");
         } catch (Exception e) {
             Map<String, Object> headers = message.getMessageProperties().getHeaders();
             Long retryCount = getRetryCount(headers);
-            //重试3次
             if (retryCount < Consts.RETRY_COUNT) {
-                log.info("消费消息：{} 异常，准备重试第{}次", m, ++retryCount);
+                log.info("Handler 消费消息：{} 异常，准备重试第{}次", m, ++retryCount);
 
                 AMQP.BasicProperties rabbitMQProperties =
                         messagePropertiesConverter.fromMessageProperties(message.getMessageProperties(), "UTF-8");
@@ -60,6 +59,6 @@ public class MQListener {
 
     @RabbitListener(queues = Consts.DEAD_QUEUE)
     public void deadHandler(@Payload Message message) {
-        log.error("收到死信消息： {}", new String(message.getBody()));
+        log.error("DeadHandler 收到死信消息： {}", new String(message.getBody()));
     }
 }
