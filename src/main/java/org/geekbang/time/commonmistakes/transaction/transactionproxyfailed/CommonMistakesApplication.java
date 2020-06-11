@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
+//@EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
 public class CommonMistakesApplication {
 
     public static void main(String[] args) {
