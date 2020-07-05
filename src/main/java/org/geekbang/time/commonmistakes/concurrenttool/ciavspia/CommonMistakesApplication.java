@@ -25,7 +25,7 @@ public class CommonMistakesApplication {
         }
         log.info("test containsKey after putIfAbsent : {}", map.containsKey("test1"));
         log.info("computeIfAbsent null value : {}", map.computeIfAbsent("test2", k -> null));
-        log.info("test containsKey after putIfAbsent : {}", map.containsKey("test2"));
+        log.info("test containsKey after computeIfAbsent : {}", map.containsKey("test2"));
         log.info("putIfAbsent non-null value : {}", map.putIfAbsent("test3", "test3"));
         log.info("computeIfAbsent non-null value : {}", map.computeIfAbsent("test4", k -> "test4"));
         log.info("putIfAbsent expensive value : {}", map.putIfAbsent("test4", getValue()));
