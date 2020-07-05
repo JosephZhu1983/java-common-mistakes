@@ -228,11 +228,29 @@ public class StreamDetailTest {
 
     @Test
     public void peek() {
-        orders.stream()
-                .filter(order -> order.getTotalPrice() > 40)
-                .peek(order -> System.out.println(order.toString()))
-                .map(Order::getCustomerName)
-                .collect(toList());
+        IntStream.rangeClosed(1, 10)
+                .peek(i -> {
+                    System.out.println("第一次peek");
+                    System.out.println(i);
+                })
+                .filter(i -> i > 5)
+                .peek(i -> {
+                    System.out.println("第二次peek");
+                    System.out.println(i);
+                })
+                .filter(i -> i % 2 == 0)
+                .forEach(i -> {
+                    System.out.println("最终结果");
+                    System.out.println(i);
+                });
+
+//        orders.stream()
+//                .filter(order -> order.getTotalPrice() > 40)
+//                .peek(order -> System.out.println(order.toString()))
+//                .map(Order::getCustomerName)
+//                .collect(toList());
+
+
     }
 
     @Test
