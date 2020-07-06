@@ -109,10 +109,11 @@ public class ThreadPoolOOMController {
 
     @GetMapping("better")
     public int better() throws InterruptedException {
-        AtomicInteger atomicInteger = new AtomicInteger();
+        //这里开始是激进线程池的实现
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(10) {
             @Override
             public boolean offer(Runnable e) {
+                //先返回false，造成队列满的假象，让线程池优先扩容
                 return false;
             }
         };
@@ -122,7 +123,8 @@ public class ThreadPoolOOMController {
                 5, TimeUnit.SECONDS,
                 queue, new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").get(), (r, executor) -> {
             try {
-                //executor.getQueue().put(r);
+                //等出现拒绝后再加入队列
+                //如果希望队列满了阻塞线程而不是抛出异常，那么可以注释掉下面三行代码，修改为executor.getQueue().put(r);
                 if (!executor.getQueue().offer(r, 0, TimeUnit.SECONDS)) {
                     throw new RejectedExecutionException("ThreadPool queue full, failed to offer " + r.toString());
                 }
@@ -130,8 +132,14 @@ public class ThreadPoolOOMController {
                 Thread.currentThread().interrupt();
             }
         });
+        //激进线程池实现结束
 
         printStats(threadPool);
+        //每秒提交一个任务，每个任务耗时10秒执行完成，一共提交20个任务
+
+        //任务编号计数器
+        AtomicInteger atomicInteger = new AtomicInteger();
+
         IntStream.rangeClosed(1, 20).forEach(i -> {
             try {
                 TimeUnit.SECONDS.sleep(1);
