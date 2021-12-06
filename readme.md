@@ -1,5 +1,9 @@
 ## 《Java业务开发常见错误100例》源码目录
 
+### 联系我
+[我和1对1沟通](https://www.zaih.com/falcon/mentors/2by2w5y2n80)
+[我的博客](https://www.cnblogs.com/lovecindywang/)
+
 ### 专栏地址
 [进入极客时间专栏](https://time.geekbang.org/column/intro/294?utm_term=zeus134KG&utm_source=blog&utm_medium=zhuye)
 
