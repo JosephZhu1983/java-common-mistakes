@@ -16,8 +16,6 @@ import java.util.concurrent.TimeUnit;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    @Resource
-    private TransactionTemplate transactionTemplate;
 
     public int getUserCount(String name) {
         return userRepository.findByName(name).size();
@@ -35,6 +33,9 @@ public class UserService {
             throw new RuntimeException("error");
     }
 
+    @Resource
+    private TransactionTemplate transactionTemplate;
+
     public void createUser2(String name) {
         List<Runnable> list = new ArrayList<>();
         list.add(() -> userRepository.save(new UserEntity(name, "[1]")));
@@ -47,6 +48,7 @@ public class UserService {
             if (name.equals("error"))
                 throw new RuntimeException("error");
         });
+        transactionTemplate.setName("createUser2");
         transactionTemplate.executeWithoutResult(s -> list.forEach(Runnable::run));
     }
 }
