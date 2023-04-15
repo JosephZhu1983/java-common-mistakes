@@ -15,6 +15,14 @@ public class IntAndStringEqualController {
 
     List<String> list = new ArrayList<>();
 
+    @GetMapping("stringcomparetoint")
+    public void stringcomparetoint() {
+        int i = 1;
+        log.info("{}", "1".equals(i));
+        log.info("{}", "1".equals(String.valueOf(i)));
+        log.info("{}", Integer.parseInt("1") == i);
+    }
+
     @GetMapping("stringcompare")
     public void stringcomare() {
         String a = "1";
