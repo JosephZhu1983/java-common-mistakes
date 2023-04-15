@@ -26,17 +26,13 @@ public class MyService implements InitializingBean, DisposableBean, BeanNameAwar
         return counter;
     }
 
-    public void init() {
-        log.info("{}({}).init:{}", this, beanName, increaseCounter());
-    }
-
     public void hello() {
         log.info("{}({}).hello:{}", this, beanName, increaseCounter());
     }
 
-    @PreDestroy
-    public void preDestroy() {
-        log.info("{}.preDestroy:{}", this, beanName, increaseCounter());
+    @PostConstruct
+    public void postConstruct() {
+        log.info("{}({}).postConstruct:{}", this, beanName, increaseCounter());
     }
 
     @Override
@@ -44,9 +40,13 @@ public class MyService implements InitializingBean, DisposableBean, BeanNameAwar
         log.info("{}({}).afterPropertiesSet:{}", this, beanName, increaseCounter());
     }
 
-    @PostConstruct
-    public void postConstruct() {
-        log.info("{}({}).postConstruct:{}", this, beanName, increaseCounter());
+    public void init() {
+        log.info("{}({}).init:{}", this, beanName, increaseCounter());
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        log.info("{}.preDestroy:{}", this, beanName, increaseCounter());
     }
 
     @Override
@@ -56,6 +56,7 @@ public class MyService implements InitializingBean, DisposableBean, BeanNameAwar
 
     @Override
     public void setBeanName(String s) {
+        log.info("{}({}).setBeanName:{}", this, beanName, increaseCounter());
         this.beanName = s;
     }
 }
