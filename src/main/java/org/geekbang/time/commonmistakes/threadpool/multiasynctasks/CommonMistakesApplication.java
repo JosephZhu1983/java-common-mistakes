@@ -1,4 +1,4 @@
-package org.geekbang.time.commonmistakes.concurrenttool.multiasynctasks;
+package org.geekbang.time.commonmistakes.threadpool.multiasynctasks;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ public class CommonMistakesApplication {
     private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
     public static void main(String[] args) {
-        test1();
+
     }
 
     private static void test1() {
@@ -24,7 +24,7 @@ public class CommonMistakesApplication {
                 .collect(Collectors.toList());
         List<Integer> result = futures.stream().map(future -> {
             try {
-                return future.get(2, TimeUnit.MILLISECONDS);
+                return future.get();
             } catch (Exception e) {
                 e.printStackTrace();
                 return -1;
@@ -47,13 +47,12 @@ public class CommonMistakesApplication {
         CountDownLatch countDownLatch = new CountDownLatch(count);
         IntStream.rangeClosed(1, count).forEach(i -> threadPool.execute(executeAsyncTask(i, countDownLatch, result)));
         try {
-            countDownLatch.await(3, TimeUnit.SECONDS);
+            countDownLatch.await(5, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         log.info("result {} took {} ms", result, System.currentTimeMillis() - begin);
     }
-
     private static Runnable executeAsyncTask(int i, CountDownLatch countDownLatch, List<Integer> result) {
         return () -> {
             try {
