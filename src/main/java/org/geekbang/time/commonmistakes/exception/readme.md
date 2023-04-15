@@ -3,3 +3,4 @@
 - 小心finally中的异常：finallyissue
 - 千万别把异常定义为静态变量：predefinedexception
 - 提交线程池的任务出了异常会怎么样？：threadpoolandexception
+- （补充）需要注意JVM针对异常性能优化导致栈信息丢失的坑：stacktrace

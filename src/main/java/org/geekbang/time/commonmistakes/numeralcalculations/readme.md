@@ -3,4 +3,4 @@
 - 考虑浮点数舍入和格式化的方式：rounding
 - 用equals做判等，就一定是对的吗？：equals
 - 小心数值溢出问题：overflowissue
-
+- （补充）不是所有的除0都会出异常：dividebyzero
