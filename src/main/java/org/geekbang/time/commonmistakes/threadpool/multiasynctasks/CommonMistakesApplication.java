@@ -14,7 +14,7 @@ public class CommonMistakesApplication {
     private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
     public static void main(String[] args) {
-
+        test2();
     }
 
     private static void test1() {
@@ -47,7 +47,7 @@ public class CommonMistakesApplication {
         CountDownLatch countDownLatch = new CountDownLatch(count);
         IntStream.rangeClosed(1, count).forEach(i -> threadPool.execute(executeAsyncTask(i, countDownLatch, result)));
         try {
-            countDownLatch.await(5, TimeUnit.SECONDS);
+            countDownLatch.await(3500, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
