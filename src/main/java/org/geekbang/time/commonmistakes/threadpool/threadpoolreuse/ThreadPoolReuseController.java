@@ -1,6 +1,6 @@
 package org.geekbang.time.commonmistakes.threadpool.threadpoolreuse;
 
-import jodd.util.concurrent.ThreadFactoryBuilder;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +42,7 @@ public class ThreadPoolReuseController {
                 10, 50,
                 2, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(1000),
-                new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").get());
+                new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").build());
 
         public static ThreadPoolExecutor getThreadPool() {
             return (ThreadPoolExecutor) Executors.newCachedThreadPool();

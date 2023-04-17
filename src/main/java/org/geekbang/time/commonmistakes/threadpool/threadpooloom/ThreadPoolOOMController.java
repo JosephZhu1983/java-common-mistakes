@@ -1,6 +1,6 @@
 package org.geekbang.time.commonmistakes.threadpool.threadpooloom;
 
-import jodd.util.concurrent.ThreadFactoryBuilder;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +77,7 @@ public class ThreadPoolOOMController {
                 2, 5,
                 5, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(10),
-                new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").get(),
+                new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").build(),
                 new ThreadPoolExecutor.AbortPolicy());
         //threadPool.allowCoreThreadTimeOut(true);
         printStats(threadPool);
@@ -121,7 +121,7 @@ public class ThreadPoolOOMController {
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
                 2, 5,
                 5, TimeUnit.SECONDS,
-                queue, new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").get(), (r, executor) -> {
+                queue, new ThreadFactoryBuilder().setNameFormat("demo-threadpool-%d").build(), (r, executor) -> {
             try {
                 //等出现拒绝后再加入队列
                 //如果希望队列满了阻塞线程而不是抛出异常，那么可以注释掉下面三行代码，修改为executor.getQueue().put(r);

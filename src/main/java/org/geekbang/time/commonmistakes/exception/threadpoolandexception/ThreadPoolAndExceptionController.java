@@ -1,6 +1,6 @@
 package org.geekbang.time.commonmistakes.exception.threadpoolandexception;
 
-import jodd.util.concurrent.ThreadFactoryBuilder;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +29,7 @@ public class ThreadPoolAndExceptionController {
         String prefix = "test";
         ExecutorService threadPool = Executors.newFixedThreadPool(1, new ThreadFactoryBuilder()
                 .setNameFormat(prefix + "%d")
-                .setUncaughtExceptionHandler((thread, throwable) -> log.error("ThreadPool {} got exception", thread, throwable))
-                .get());
+                .setUncaughtExceptionHandler((thread, throwable) -> log.error("ThreadPool {} got exception", thread, throwable)).build());
         IntStream.rangeClosed(1, 10).forEach(i -> threadPool.execute(() -> {
             if (i == 5) throw new RuntimeException("error");
             log.info("I'm done : {}", i);
@@ -44,7 +43,7 @@ public class ThreadPoolAndExceptionController {
     public void submit() throws InterruptedException {
 
         String prefix = "test";
-        ExecutorService threadPool = Executors.newFixedThreadPool(1, new ThreadFactoryBuilder().setNameFormat(prefix + "%d").get());
+        ExecutorService threadPool = Executors.newFixedThreadPool(1, new ThreadFactoryBuilder().setNameFormat(prefix + "%d").build());
         IntStream.rangeClosed(1, 10).forEach(i -> threadPool.submit(() -> {
             if (i == 5) throw new RuntimeException("error");
             log.info("I'm done : {}", i);
@@ -58,7 +57,7 @@ public class ThreadPoolAndExceptionController {
     public void submitRight() throws InterruptedException {
 
         String prefix = "test";
-        ExecutorService threadPool = Executors.newFixedThreadPool(1, new ThreadFactoryBuilder().setNameFormat(prefix + "%d").get());
+        ExecutorService threadPool = Executors.newFixedThreadPool(1, new ThreadFactoryBuilder().setNameFormat(prefix + "%d").build());
 
         List<Future> tasks = IntStream.rangeClosed(1, 10).mapToObj(i -> threadPool.submit(() -> {
             if (i == 5) throw new RuntimeException("error");

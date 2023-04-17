@@ -1,6 +1,6 @@
 package org.geekbang.time.commonmistakes.asyncprocess.compensation;
 
-import jodd.util.concurrent.ThreadFactoryBuilder;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,7 +17,7 @@ public class CompensationJob {
             10, 10,
             1, TimeUnit.HOURS,
             new ArrayBlockingQueue<>(1000),
-            new ThreadFactoryBuilder().setNameFormat("compensation-threadpool-%d").get());
+            new ThreadFactoryBuilder().setNameFormat("compensation-threadpool-%d").build());
     @Autowired
     private UserService userService;
     @Autowired
