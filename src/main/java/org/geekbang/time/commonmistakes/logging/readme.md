@@ -2,3 +2,4 @@
 - 为什么我的日志会重复记录？：duplicate
 - 使用异步日志改善性能的坑：async
 - 使用日志占位符就不需要进行日志级别判断了：placeholder
+  -（补充）MDC：mdc
