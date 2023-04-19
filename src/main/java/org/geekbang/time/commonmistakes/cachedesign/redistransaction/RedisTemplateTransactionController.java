@@ -10,23 +10,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("redistemplatetransaction")
 @RestController
 public class RedisTemplateTransactionController {
-    ;
 
     @Autowired
     private TestService testService;
 
     @GetMapping("test1")
-    public Long test1() {
-        return testService.test1();
+    public String test1() {
+        return testService.multiTest();
     }
 
     @GetMapping("test2")
-    public Long test2() {
-        return testService.test2();
+    public String test2() {
+        return testService.noMultiTest();
     }
 
     @GetMapping("test3")
-    public Long test3() {
-        return testService.test3();
+    public String test3() {
+        return testService.redisTemplateInTransactional();
+    }
+
+    @GetMapping("test4")
+    public String test4() {
+        return testService.multiTestInTransactional();
     }
 }

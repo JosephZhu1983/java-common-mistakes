@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 @Component
 @Slf4j
@@ -22,21 +23,36 @@ public class TestService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
+    private StringRedisTemplate stringRedisTemplateTran;
+    @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 
-    public Long test1() {
-        return stringRedisTemplate.opsForValue().increment("test", 1);
+    public String multiTest() {
+        Long current = System.currentTimeMillis();
+        stringRedisTemplateTran.multi();
+        IntStream.rangeClosed(1, 1000).forEach(i -> stringRedisTemplateTran.opsForValue().increment("test", 1));
+        stringRedisTemplateTran.exec();
+        return System.currentTimeMillis() - current + "ms " + stringRedisTemplateTran.opsForValue().get("test");
     }
 
-    public Long test2() {
-        stringRedisTemplate.setEnableTransactionSupport(true);
-        return stringRedisTemplate.opsForValue().increment("test", 1);
+    public String noMultiTest() {
+        Long current = System.currentTimeMillis();
+        IntStream.rangeClosed(1, 1000).forEach(i -> stringRedisTemplate.opsForValue().increment("test", 1));
+        return System.currentTimeMillis() - current + "ms " + stringRedisTemplate.opsForValue().get("test");
     }
 
     @Transactional
-    public Long test3() {
-        stringRedisTemplate.setEnableTransactionSupport(true);
-        return stringRedisTemplate.opsForValue().increment("test", 1);
+    public String redisTemplateInTransactional() {
+        return "" + stringRedisTemplateTran.opsForValue().increment("test", 1);
+    }
+
+    @Transactional
+    public String multiTestInTransactional() {
+        Long current = System.currentTimeMillis();
+        stringRedisTemplateTran.multi();
+        IntStream.rangeClosed(1, 1000).forEach(i -> stringRedisTemplateTran.opsForValue().increment("test", 1));
+        stringRedisTemplateTran.exec();
+        return System.currentTimeMillis() - current + "ms " + stringRedisTemplate.opsForValue().get("test");
     }
 
     @PostConstruct
