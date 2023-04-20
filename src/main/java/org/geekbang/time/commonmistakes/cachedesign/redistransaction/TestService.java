@@ -46,7 +46,8 @@ public class TestService {
     }
 
     @Transactional
-    public String redisTemplateInTransactional() {
+    public String redisTemplateInTransactional() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(10);
         return "" + stringRedisTemplateTran.opsForValue().increment("test", 1);
     }
 
@@ -64,8 +65,20 @@ public class TestService {
                 return operations.exec();
             }
         });
-        log.info("txResults = {}", txResults);
+        //log.info("txResults = {}", txResults);
         return System.currentTimeMillis() - current + "ms " + stringRedisTemplate.opsForValue().get("test");
+    }
+
+    public String counter() {
+        return stringRedisTemplate.opsForValue().get("test");
+    }
+
+    @Transactional
+    public String multiTestInTransactional() {
+        Long current = System.currentTimeMillis();
+        stringRedisTemplateTran.multi();
+        IntStream.rangeClosed(1, 10000).forEach(i -> stringRedisTemplateTran.opsForValue().increment("test", 1));
+        return System.currentTimeMillis() - current + "ms ";
     }
 
     @PostConstruct

@@ -14,11 +14,6 @@ public class RedisTemplateTransactionController {
     @Autowired
     private TestService testService;
 
-    @GetMapping("test0")
-    public String test0() throws InterruptedException {
-        return testService.redisTemplateNotInTransactional();
-    }
-
     @GetMapping("test1")
     public String test1() {
         return testService.multiTest();
@@ -30,12 +25,23 @@ public class RedisTemplateTransactionController {
     }
 
     @GetMapping("test3")
-    public String test3() {
+    public String test3() throws InterruptedException {
+        return testService.redisTemplateNotInTransactional();
+    }
+
+
+    @GetMapping("test4")
+    public String test4() throws InterruptedException {
         return testService.redisTemplateInTransactional();
     }
 
-    @GetMapping("test4")
-    public String test4() {
+    @GetMapping("test5")
+    public String test5() {
         return testService.multiTestCallback();
+    }
+
+    @GetMapping("test6")
+    public String test6() {
+        return testService.multiTestInTransactional() + testService.counter();
     }
 }
