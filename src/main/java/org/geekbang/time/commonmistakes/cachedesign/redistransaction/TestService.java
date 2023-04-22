@@ -76,7 +76,6 @@ public class TestService {
     @Transactional
     public String multiTestInTransactional() {
         Long current = System.currentTimeMillis();
-        stringRedisTemplateTran.multi();
         IntStream.rangeClosed(1, 10000).forEach(i -> stringRedisTemplateTran.opsForValue().increment("test", 1));
         return System.currentTimeMillis() - current + "ms ";
     }
