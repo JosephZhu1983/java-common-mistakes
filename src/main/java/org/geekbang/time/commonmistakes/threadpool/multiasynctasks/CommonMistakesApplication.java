@@ -80,7 +80,8 @@ public class CommonMistakesApplication {
         try {
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                     .get(3, TimeUnit.SECONDS);
-        } catch (TimeoutException ignore) {
+        } catch (TimeoutException e) {
+            e.printStackTrace();
         }
 
         log.info("result {} took {} ms", result, System.currentTimeMillis() - begin);
