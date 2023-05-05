@@ -3,3 +3,4 @@
 - 泛型经过类型擦除多出桥接方法的坑：genericandinheritance
 - 注解可以继承吗？：annotationinheritance
 - （补充）内部类的例子：innerclass
+- （补充）Java反射的膨胀机制：reflectioninternal
