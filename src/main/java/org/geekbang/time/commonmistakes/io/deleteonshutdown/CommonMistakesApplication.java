@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class CommonMistakesApplication {
 
     public static void main(String[] args) throws Exception {
-        file3();
+        file2();
     }
 
     private static void file() throws Exception {
@@ -40,8 +40,8 @@ public class CommonMistakesApplication {
                         System.out.println(line);
                     }
                 }
+                System.out.println(Files.exists(path));
             }
-            System.out.println(Files.exists(path));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
