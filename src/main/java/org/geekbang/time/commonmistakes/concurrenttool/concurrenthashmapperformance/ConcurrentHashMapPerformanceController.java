@@ -72,6 +72,8 @@ public class ConcurrentHashMapPerformanceController {
         forkJoinPool.execute(() -> IntStream.rangeClosed(1, LOOP_COUNT).parallel().forEach(i -> {
                     String key = "item" + ThreadLocalRandom.current().nextInt(ITEM_COUNT);
                     freqs.computeIfAbsent(key, k -> new LongAdder()).increment();
+                    freqs.computeIfPresent(key, (k, v) -> v).increment();
+
                 }
         ));
         forkJoinPool.shutdown();
