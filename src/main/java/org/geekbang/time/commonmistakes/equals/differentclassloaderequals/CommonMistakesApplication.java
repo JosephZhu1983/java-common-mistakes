@@ -44,7 +44,6 @@ public class CommonMistakesApplication {
         System.out.println(point3 instanceof Point);//true
         System.out.println(point3.getClass() == Point.class);//true
         System.out.println(point3.equals(point2));//true
-
     }
 }
 

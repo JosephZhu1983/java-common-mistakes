@@ -11,11 +11,11 @@ import java.util.stream.IntStream;
 public class CommonMistakesApplication {
 
     public static void main(String[] args) throws InterruptedException {
-        //wrong: java -jar common-mistakes-0.0.1-SNAPSHOT.jar -Xms1g -Xmx1g
-        //right: java -Xms1g -Xmx1g -jar common-mistakes-0.0.1-SNAPSHOT.jar
+        //wrong: java -jar java-common-mistakes-0.0.1-SNAPSHOT.jar -Xms1g -Xmx1g
+        //right: java -Xms1g -Xmx1g -jar java-common-mistakes-0.0.1-SNAPSHOT.jar
 
-        //wrong: java -XX:ThreadStackSize=256k common-mistakes-0.0.1-SNAPSHOT.jar
-        //right: java -XX:ThreadStackSize=256 common-mistakes-0.0.1-SNAPSHOT.jar
+        //wrong: java -XX:NativeMemoryTracking=detail -XX:ThreadStackSize=256k -jar java-common-mistakes-0.0.1-SNAPSHOT.jar
+        //right: java -XX:NativeMemoryTracking=detail -XX:ThreadStackSize=256 -jar java-common-mistakes-0.0.1-SNAPSHOT.jar
 
         //-Xms1g -Xmx1g -XX:NativeMemoryTracking=summary
         System.out.println("VM options");
