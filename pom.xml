@@ -8,7 +8,7 @@
         <version>2.2.1.RELEASE</version>
         <relativePath/>
     </parent>
-    <groupId>org.geekbang.time</groupId>
+    <groupId>javaprogramming</groupId>
     <artifactId>java-common-mistakes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>java-common-mistakes</name>
@@ -218,7 +218,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.geekbang.time.commonmistakes.troubleshootingtools.jdktool.CommonMistakesApplication
+                    <mainClass>javaprogramming.commonmistakes.troubleshootingtools.jdktool.CommonMistakesApplication
                     </mainClass>
                 </configuration>
             </plugin>
