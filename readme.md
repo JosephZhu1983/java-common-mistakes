@@ -1,5 +1,10 @@
 ## 《Java 开发坑点解析：从根因分析到最佳实践》源码目录
 
+### 书籍购买地址
+
+[京东购买](https://item.jd.com/13986317.html)
+[当当购买](https://product.dangdang.com/11673548094.html)
+
 ### 源码说明
 
 - 专栏的所有代码基于Java 8 + Spring Boot 2.2.1.RELEASE + Spring Cloud Greenwich.SR4 + Spring Data
